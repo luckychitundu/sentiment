@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import axios from 'axios';
+import sentiment from 'sentiment'; // Don't forget to import sentiment
+import TweetSentimentAnalysis from './TweetSentimentAnalysis';
+import TweetFilterButtons from './TweetFilterButtons';
 
-function App() {
+const App = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [tweets, setTweets] = useState([]);
+
+  const handleInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearch = () => {
+    axios
+      .post('/search', { search_query: searchQuery })
+      .then((response) => {
+        const { success, tweets } = response.data;
+        if (success) {
+          // Perform sentiment analysis on the tweets
+          const analyzedTweets = tweets.map((tweet) => {
+            const { full_text } = tweet;
+            const { score, comparative } = sentiment(full_text);
+            return {
+              full_text,
+              score,
+              comparative,
+            };
+          });
+
+          setTweets(analyzedTweets);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching tweets:', error);
+      });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <TweetSentimentAnalysis
+        searchQuery={searchQuery}
+        handleInputChange={handleInputChange}
+        handleSearch={handleSearch}
+        tweets={tweets}
+      />
+      <TweetFilterButtons searchQuery={searchQuery} setTweets={setTweets} />
     </div>
   );
-}
+};
 
 export default App;
