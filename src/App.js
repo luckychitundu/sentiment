@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import sentiment from 'sentiment'; // Don't forget to import sentiment
+import sentiment from 'sentiment';
 import TweetSentimentAnalysis from './TweetSentimentAnalysis';
-// import TweetFilterButtons from './TweetFilterButtons';
 import BackgroundChanger from './BackgroundChanger';
 
 const App = () => {
@@ -13,30 +12,52 @@ const App = () => {
     setSearchQuery(event.target.value);
   };
 
-  const handleSearch = () => {
-    axios
-      .post('/search', { search_query: searchQuery })
-      .then((response) => {
-        const { success, tweets } = response.data;
-        if (success) {
-          // Perform sentiment analysis on the tweets
-          const analyzedTweets = tweets.map((tweet) => {
-            const { full_text } = tweet;
-            const { score, comparative } = sentiment(full_text);
-            return {
-              full_text,
-              score,
-              comparative,
-            };
-          });
+  // Function to fetch tweets using Axios
+  const fetchTweets = async () => {
+    const options = {
+      method: 'GET',
+      url: 'https://twitter-scraper2.p.rapidapi.com/search',
+      params: {
+        searchTerms: searchQuery, // Use the user's search query
+        maxTweets: '5'
+      },
+      headers: {
+        'X-RapidAPI-Key': '7ddeb23e3emsha62f3169834ef8dp1d4816jsn5de3b2d1673c',
+        'X-RapidAPI-Host': 'twitter-scraper2.p.rapidapi.com'
+      }
+    };
 
-          setTweets(analyzedTweets);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching tweets:', error);
+    try {
+      const response = await axios.request(options);
+      const data = response.data.tweet;
+      
+      // Perform sentiment analysis on the tweets
+      const analyzedTweets = data.map((tweet) => {
+        const full_text = tweet;
+        console.log(full_text);
+        const { score, comparative } = sentiment(full_text);
+        
+        return {
+          full_text,
+          score,
+          comparative,
+        }; 
+        
       });
+      // console.log(analyzedTweets);
+      setTweets(analyzedTweets);
+
+    } catch (error) {
+      console.error('Error fetching tweets:', error);
+    }
   };
+
+  const handleSearch = () => {
+    // Fetch tweets using Axios
+    fetchTweets();
+  };
+
+  
 
   return (
     <div>
@@ -46,12 +67,10 @@ const App = () => {
         handleSearch={handleSearch}
         tweets={tweets}
       />
-      {/* <TweetFilterButtons searchQuery={searchQuery} setTweets={setTweets} /> */}
+
       <BackgroundChanger />
     </div>
   );
 };
 
 export default App;
-
-// backgroundImage: `url(/background${currentImage}.jpg)`
