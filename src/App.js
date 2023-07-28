@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import sentiment from 'sentiment'; // Don't forget to import sentiment
 import TweetSentimentAnalysis from './TweetSentimentAnalysis';
-import TweetFilterButtons from './TweetFilterButtons';
+// import TweetFilterButtons from './TweetFilterButtons';
+import BackgroundChanger from './BackgroundChanger';
 
 const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,9 +46,12 @@ const App = () => {
         handleSearch={handleSearch}
         tweets={tweets}
       />
-      <TweetFilterButtons searchQuery={searchQuery} setTweets={setTweets} />
+      {/* <TweetFilterButtons searchQuery={searchQuery} setTweets={setTweets} /> */}
+      <BackgroundChanger />
     </div>
   );
 };
 
 export default App;
+
+// backgroundImage: `url(/background${currentImage}.jpg)`
