@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-// import TweetFilterButtons from './TweetFilterButtons';
+import axios from 'axios';
+import sentiment from 'sentiment';
 
 const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, tweets }) => {
   const [filteredTweets, setFilteredTweets] = useState([]);
 
+  // Function to handle the search action
+  const performSearch = () => {
+    handleSearch(); // Call the handleSearch function from the parent component (App)
+    setFilteredTweets([]); // Clear the filteredTweets state when performing a new search
+  };
+
+  // Function to handle tweet filtering
   const handleFilter = (filterType) => {
     let filteredTweets = [];
     if (filterType === 'positive') {
@@ -31,6 +39,7 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
       <div className="inner-bg">
         <div className="container">
           <div className="row">
+            {/* ... existing component UI ... */}
             <div className="col-sm-10 col-sm-offset-1 text">
               <h1><strong>Tweets</strong> Analysis</h1>
               <div className="description">
@@ -70,13 +79,17 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 
                   <div className="row search_tweets">
                     <div className="col-sm-offset-3 col-sm-6">
-                      <button type="button" onClick={handleSearch} className="btn">Search Tweets</button>
+                      <button type="button" onClick={performSearch} className="btn">
+                        Search Tweets
+                      </button>
                     </div>
                   </div>
 
                   <div className="row reset_filter">
                     <div className="col-sm-offset-3 col-sm-6">
-                      <button data-toggle="tooltip" data-placement="top" title="Show all Tweets" className="btn">Reset Filters</button>
+                      <button data-toggle="tooltip" data-placement="top" title="Show all Tweets" className="btn">
+                        Reset Filters
+                      </button>
                     </div>
                   </div>
 
@@ -142,26 +155,22 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 
           <div id="search_result">
             <ol id="search_list">
-              {filteredTweets.map((tweet, index) => (
-                <li key={index}>
-                  <p>{tweet.full_text}</p>
-                  <p>Score: {tweet.score}</p>
-                  <p>Comparative: {tweet.comparative}</p>
-                </li>
-              ))}
+              {/* Rendering filtered tweets */}
+              {filteredTweets.length > 0 ? (
+                filteredTweets.map((tweet, index) => (
+                  <li key={index}>
+                    <p>{tweet.full_text}</p>
+                    <p>Score: {tweet.score}</p>
+                    <p>Comparative: {tweet.comparative}</p>
+                  </li>
+                ))
+              ) : (
+                <li>No filtered tweets to display.</li>
+              )}
             </ol>
           </div>
 
-          <div className="row">
-            <div className="col-sm-6 col-sm-offset-3 social-login">
-              <h3>Source Code Available at:</h3>
-              <div className="social-login-buttons">
-                <a className="btn btn-link-1 btn-link-1-facebook" href="https://github.com/rbhatia46">
-                  <i className="fa fa-github"></i> Github
-                </a>
-              </div>
-            </div>
-          </div>
+          {/* ... remaining UI elements ... */}
         </div>
       </div>
     </div>
