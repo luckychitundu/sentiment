@@ -178,3 +178,23 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 };
 
 export default TweetSentimentAnalysis;
+
+
+
+
+        // Perform sentiment analysis on the tweets
+        // const analyzedTweets = data.map((tweet) => {
+        //   const full_text = tweet;
+        //   console.log(full_text);
+        //   const { score, comparative } = sentiment(full_text);
+          
+        //   return {
+        //     full_text,
+        //     score,
+        //     comparative,
+        //   }; 
+          
+        // });
+       
+        // setTweets(analyzedTweets);
+  
