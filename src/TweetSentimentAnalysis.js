@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import sentiment from 'sentiment';
 
 const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, tweets }) => {
   const [filteredTweets, setFilteredTweets] = useState([]);
 
   // Function to handle the search action
-  const performSearch = () => {
-    handleSearch(); // Call the handleSearch function from the parent component (App)
-    setFilteredTweets([]); // Clear the filteredTweets state when performing a new search
-  };
+  // const performSearch = () => {
+  //   handleSearch(); // Call the handleSearch function from the parent component (App)
+  //   tweets([]); // Clear the filteredTweets state when performing a new search
+  // };
 
   // Function to handle tweet filtering
   const handleFilter = (filterType) => {
@@ -79,7 +77,7 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 
                   <div className="row search_tweets">
                     <div className="col-sm-offset-3 col-sm-6">
-                      <button type="button" onClick={performSearch} className="btn">
+                      <button type="button" onClick={handleSearch} className="btn">
                         Search Tweets
                       </button>
                     </div>
@@ -88,7 +86,7 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
                   <div className="row reset_filter">
                     <div className="col-sm-offset-3 col-sm-6">
                       <button data-toggle="tooltip" data-placement="top" title="Show all Tweets" className="btn">
-                        Reset Filters
+                        Analyze Sentiment
                       </button>
                     </div>
                   </div>
@@ -154,20 +152,18 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
           </div>
 
           <div id="search_result">
-            <ol id="search_list">
+            <ul id="search_list">
               {/* Rendering filtered tweets */}
-              {filteredTweets.length > 0 ? (
-                filteredTweets.map((tweet, index) => (
+              {tweets.length > 0 ? (
+                tweets.map((tweet, index) => (
                   <li key={index}>
-                    <p>{tweet.full_text}</p>
-                    <p>Score: {tweet.score}</p>
-                    <p>Comparative: {tweet.comparative}</p>
+                    {tweet.full_text}
                   </li>
                 ))
               ) : (
                 <li>No filtered tweets to display.</li>
               )}
-            </ol>
+            </ul>
           </div>
 
           {/* ... remaining UI elements ... */}
@@ -179,22 +175,3 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 
 export default TweetSentimentAnalysis;
 
-
-
-
-        // Perform sentiment analysis on the tweets
-        // const analyzedTweets = data.map((tweet) => {
-        //   const full_text = tweet;
-        //   console.log(full_text);
-        //   const { score, comparative } = sentiment(full_text);
-          
-        //   return {
-        //     full_text,
-        //     score,
-        //     comparative,
-        //   }; 
-          
-        // });
-       
-        // setTweets(analyzedTweets);
-  
