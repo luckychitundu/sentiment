@@ -157,7 +157,8 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
               {tweets.length > 0 ? (
                 tweets.map((tweet, index) => (
                   <li key={index}>
-                    {tweet.full_text}
+                   <p>{tweet.full_text}</p> 
+                    <p>{tweet.created_at}</p>
                   </li>
                 ))
               ) : (
