@@ -40,7 +40,8 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 
   const handleAnalyzeButtonClick = () => {
     handleAnalysis();
-    setShowResults(true);
+    setShowResults(false);
+
   };
 
   return (
@@ -162,33 +163,39 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
             </div>
           </div>
 
-          <div id="search_result">
-          {showResults && (
-           <div id="search_result">
+
+        
+            <div id="search_result">
               <ul id="search_list">
-                {/* Rendering filtered tweets or sentiment analysis results based on the button clicked */}
-                {tweets.length > 0 ? (
-                  tweets.map((tweet, index) => (
-                    <li key={index}>
-                      <p>{tweet.full_text}</p>
-                      <p>{tweet.created_at}</p>
-                    </li>
-                  ))
-                ) : sentiments.length > 0 ? (
-                  sentiments.map((sentiment, index) => (
-                    <li key={index}>
-                      <p>Text: {tweettext[index]}</p>
-                      <p>Compound: {sentiment.compound}</p>
-                      <p>Negative: {sentiment.neg}</p>
-                    </li>
-                  ))
+                {showResults === true ? (
+                  tweets.length > 0 ? (
+                    tweets.map((tweet, index) => (
+                      <li key={index}>
+                        <p>{tweet.full_text}</p>
+                        <p>{tweet.created_at}</p>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No results to display</li>
+                  )
                 ) : (
-                  <li>No results to display.</li>
+                  sentiments.length > 0 ? (
+                    sentiments.map((sentiment, index) => (
+                      <li key={index}>
+                        <p>Text: {tweettext[index]}</p>
+                        <p>Positive: {sentiment.pos}</p>
+                        <p>Neutral: {sentiment.neu}</p>
+                        <p>Negative: {sentiment.neg}</p>
+                        <p>Compound: {sentiment.compound}</p>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No results to display</li>
+                  )
                 )}
               </ul>
-          </div>
-      )}
-          </div>
+            </div>
+
 
           {/* ... remaining UI elements ... */}
         </div>
