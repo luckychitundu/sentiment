@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# Twitter Sentiment Analysis Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Twitter Sentiment Analysis Application is a web application built using React that allows users to retrieve real-time tweets based on a search topic and perform sentiment analysis on the retrieved tweets. The application leverages two APIs to provide these features.
 
-## Available Scripts
+![Screenshot (9)](https://github.com/luckychitundu/sentiment/assets/87910852/65336a74-e8a2-4814-99fd-373356add646)
 
-In the project directory, you can run:
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Real-Time Tweet Retrieval:** Users can enter a specific search topic, and the application will fetch a pre-determined number of real-time tweets related to the entered topic.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. **Sentiment Analysis:** The application performs sentiment analysis on the fetched tweets and provides insights into the sentiment of the tweets. Sentiment analysis results are categorized into four factors: positive, negative, neutral, and compound.
 
-### `npm test`
+3. **Alert System (Future Enhancement):** The application's future goal is to serve as an alert system. It will detect and notify the necessary agencies if alarming sentiments are detected from the tweets. This feature aims to provide a proactive approach to identifying potential issues or crises based on social media sentiment.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## APIs Used
 
-### `npm run build`
+1. **Twitter API:** The application utilizes the Twitter API to retrieve real-time tweets based on the user's search topic. It provides access to recent tweets that match the specified criteria.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Sentiment Analysis API:** The sentiment analysis functionality is powered by a sentiment analysis API. The API analyzes the text content of the tweets and returns sentiment scores, including positive, negative, neutral, and compound values.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## How to Use
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Enter a Search Topic: In the application's search bar, enter a specific topic for which you want to retrieve real-time tweets.
 
-### `npm run eject`
+2. Retrieve Tweets: Click the "Search" button to fetch a pre-determined number of real-time tweets related to the entered topic.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Perform Sentiment Analysis: After retrieving tweets, click the "Analyze Sentiment" button to perform sentiment analysis on the fetched tweets. The sentiment analysis will categorize the tweets into positive, negative, neutral, and compound factors.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Interpret Results: Review the sentiment analysis results to gain insights into the overall sentiment of the tweets related to the search topic.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Future Enhancements
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The Twitter Sentiment Analysis Application has a promising future with plans to implement an alert system:
 
-## Learn More
+1. **Alert System:** The application aims to evolve into an alert system that detects and notifies relevant agencies or users if alarming sentiments are detected in the tweets. This proactive approach can help in identifying potential issues or crises in real time.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To run the Twitter Sentiment Analysis Application locally:
 
-### Code Splitting
+1. Clone this repository to your local machine.
+2. Install the required dependencies using `npm install`.
+3. Create a `.env` file in the root directory and add your Twitter API and Sentiment Analysis API keys in the following format:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   ```
+   REACT_APP_TWITTER_API_KEY=your_twitter_api_key
+   REACT_APP_SENTIMENT_API_KEY=your_sentiment_api_key
+   ```
 
-### Analyzing the Bundle Size
+4. Run the application using `npm start`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Acknowledgments
 
-### Making a Progressive Web App
+The Twitter Sentiment Analysis Application was built as a demonstration of using React and APIs for real-time tweet retrieval and sentiment analysis. Special thanks to the developers of the Twitter API and the Sentiment Analysis API for providing the necessary tools and resources.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## License
 
-### Advanced Configuration
+This project is licensed under the [MIT License](LICENSE).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
