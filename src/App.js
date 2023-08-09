@@ -9,12 +9,15 @@ const App = () => {
   const [sentiments, setSentiments] = useState([]);
   const [tweettext,setTweettext] = useState([]);
 
+  const apiKey = process.env.REACT_APP_API_KEY;
+
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   // Function to fetch tweets using Axios
   const fetchTweets = async () => {
+    
       const options = {
         method: 'GET',
         url: 'https://twitter-data1.p.rapidapi.com/v1.1/SearchTweets/',
@@ -23,7 +26,7 @@ const App = () => {
           count: '5'
         },
         headers: {
-          'X-RapidAPI-Key': '7ddeb23e3emsha62f3169834ef8dp1d4816jsn5de3b2d1673c',
+          'X-RapidAPI-Key': apiKey,
           'X-RapidAPI-Host': 'twitter-data1.p.rapidapi.com'
         }
       };
@@ -57,7 +60,7 @@ const App = () => {
       url: 'https://text-analysis12.p.rapidapi.com/sentiment-analysis/api/v1.1',
       headers: {
         'content-type': 'application/json',
-        'X-RapidAPI-Key': '7ddeb23e3emsha62f3169834ef8dp1d4816jsn5de3b2d1673c',
+        'X-RapidAPI-Key': apiKey,
         'X-RapidAPI-Host': 'text-analysis12.p.rapidapi.com',
       },
       data: {

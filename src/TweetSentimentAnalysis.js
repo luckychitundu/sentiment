@@ -37,6 +37,7 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
   const handleSearchButtonClick = () => {
     handleSearch();
     setShowResults(true);
+    
   };
 
   const handleAnalyzeButtonClick = () => {
@@ -79,12 +80,14 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
                     <label className="sr-only" htmlFor="form-username">Username</label>
                     <input
                       type="text"
+
                       name="tweet_search"
                       placeholder="Enter a search topic"
                       className="form-username form-control"
                       id="form-username"
                       value={searchQuery}
                       onChange={handleInputChange}
+                      autoComplete="off"
                     />
                   </div>
 
@@ -204,7 +207,7 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
       </div>
 
       <div style={{fontSize:45, paddingBottom:20, marginTop:-90}}>
-        <a href='https://github.com/luckychitundu/sentiment' target='_blank'><FaGithub /></a>
+        <a href='https://github.com/luckychitundu/sentiment' target='_blank' rel="noreferrer" ><FaGithub /></a>
       </div>
     </div>
   );
