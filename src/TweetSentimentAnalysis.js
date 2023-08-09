@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaGithub } from 'react-icons/fa';
 
 const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, tweets, handleAnalysis, sentiments, tweettext }) => {
   const [filteredTweets, setFilteredTweets] = useState([]);
@@ -199,6 +200,11 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 
           {/* ... remaining UI elements ... */}
         </div>
+        
+      </div>
+
+      <div style={{fontSize:45, paddingBottom:20, marginTop:-90}}>
+        <a href='https://github.com/luckychitundu/sentiment' target='_blank'><FaGithub /></a>
       </div>
     </div>
   );
