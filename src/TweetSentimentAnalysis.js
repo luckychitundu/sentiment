@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { FaGithub } from 'react-icons/fa';
 
-const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, tweets }) => {
+const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, tweets, handleAnalysis, sentiments, tweettext }) => {
   const [filteredTweets, setFilteredTweets] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
   // Function to handle the search action
   // const performSearch = () => {
@@ -30,6 +32,18 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
         : [];
     }
     setFilteredTweets(filteredTweets);
+  };
+
+  const handleSearchButtonClick = () => {
+    handleSearch();
+    setShowResults(true);
+    
+  };
+
+  const handleAnalyzeButtonClick = () => {
+    handleAnalysis();
+    setShowResults(false);
+
   };
 
   return (
@@ -66,18 +80,20 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
                     <label className="sr-only" htmlFor="form-username">Username</label>
                     <input
                       type="text"
+
                       name="tweet_search"
                       placeholder="Enter a search topic"
                       className="form-username form-control"
                       id="form-username"
                       value={searchQuery}
                       onChange={handleInputChange}
+                      autoComplete="off"
                     />
                   </div>
 
                   <div className="row search_tweets">
                     <div className="col-sm-offset-3 col-sm-6">
-                      <button type="button" onClick={handleSearch} className="btn">
+                      <button type="button" onClick={handleSearchButtonClick} className="btn">
                         Search Tweets
                       </button>
                     </div>
@@ -85,7 +101,7 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 
                   <div className="row reset_filter">
                     <div className="col-sm-offset-3 col-sm-6">
-                      <button data-toggle="tooltip" data-placement="top" title="Show all Tweets" className="btn">
+                      <button data-toggle="tooltip" data-placement="top" title="Show all Tweets" type='button' onClick={handleAnalyzeButtonClick} className="btn">
                         Analyze Sentiment
                       </button>
                     </div>
@@ -151,24 +167,47 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
             </div>
           </div>
 
-          <div id="search_result">
-            <ul id="search_list">
-              {/* Rendering filtered tweets */}
-              {tweets.length > 0 ? (
-                tweets.map((tweet, index) => (
-                  <li key={index}>
-                   <p>{tweet.full_text}</p> 
-                    <p>{tweet.created_at}</p>
-                  </li>
-                ))
-              ) : (
-                <li>No filtered tweets to display.</li>
-              )}
-            </ul>
-          </div>
+
+        
+            <div id="search_result">
+              <ul id="search_list">
+                {showResults === true ? (
+                  tweets.length > 0 ? (
+                    tweets.map((tweet, index) => (
+                      <li key={index}>
+                        <p>{tweet.full_text}</p>
+                        <p>{tweet.created_at}</p>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No results to display</li>
+                  )
+                ) : (
+                  sentiments.length > 0 ? (
+                    sentiments.map((sentiment, index) => (
+                      <li key={index}>
+                        <p>Text: {tweettext[index]}</p>
+                        <p>Positive: {sentiment.pos}</p>
+                        <p>Neutral: {sentiment.neu}</p>
+                        <p>Negative: {sentiment.neg}</p>
+                        <p>Compound: {sentiment.compound}</p>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No results to display</li>
+                  )
+                )}
+              </ul>
+            </div>
+
 
           {/* ... remaining UI elements ... */}
         </div>
+        
+      </div>
+
+      <div style={{fontSize:45, paddingBottom:20, marginTop:-90}}>
+        <a href='https://github.com/luckychitundu/sentiment' target='_blank' rel="noreferrer" ><FaGithub /></a>
       </div>
     </div>
   );

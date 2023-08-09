@@ -2,52 +2,63 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function SentimentAnalysis() {
-  const [text, setText] = useState('');
-  const [sentiment, setSentiment] = useState(null);
+  const [sentiments, setSentiments] = useState([]);
+  const tweetsToAnalyze = ['I am feeling great', 'no power today', 'going to work'];
+  console.log(tweetsToAnalyze);
 
-  const analyzeSentiment = async () => {
+  const analyzeSentiment = async (text) => {
     const options = {
       method: 'POST',
       url: 'https://text-analysis12.p.rapidapi.com/sentiment-analysis/api/v1.1',
       headers: {
         'content-type': 'application/json',
-        'X-RapidAPI-Key': '17ddeb23e3emsha62f3169834ef8dp1d4816jsn5de3b2d1673c', // Replace with your RapidAPI key
-        'X-RapidAPI-Host': 'text-analysis12.p.rapidapi.com'
+        'X-RapidAPI-Key': '7ddeb23e3emsha62f3169834ef8dp1d4816jsn5de3b2d1673c',
+        'X-RapidAPI-Host': 'text-analysis12.p.rapidapi.com',
       },
       data: {
         language: 'english',
-        text: text // Use text instead of {text}
-      }
+        text: text,
+      },
     };
 
     try {
       const response = await axios.request(options);
-      const sentimentData = response.data;
-      console.log(sentimentData.sentiment_list);
-      setSentiment(sentimentData.sentiment_list);
-    } 
-    catch (error) {
+      return response.data.sentiment_list[0];
+    } catch (error) {
       console.error(error);
+      return null;
     }
+  };
+
+  const handleAnalysis = async () => {
+    const analyzedSentiments = await Promise.all(
+      tweetsToAnalyze.map(async (text) => {
+        const sentimentResult = await analyzeSentiment(text);
+        return sentimentResult;
+      })
+    );
+
+    setSentiments(analyzedSentiments);
   };
 
   return (
     <div>
       <h1>Sentiment Analysis using API</h1>
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Enter text for sentiment analysis..."
-        rows={4}
-      />
-      <button onClick={analyzeSentiment}>Analyze Sentiment</button>
 
-      {sentiment && (
+      <button onClick={handleAnalysis}>Analyze Sentiment</button>
+
+      {sentiments.length > 0 && (
         <div>
-          <h2>Analysis Result</h2>
-          <p>Text: {sentiment[0].sentence}</p>
-          <p>Compound: {sentiment[0].compound}</p>
-          <p>Negative: {sentiment[0].neg}</p>
+          <h2>Analysis Results</h2>
+          <ul>
+            {sentiments.map((sentiment, index) => (
+              <li key={index}>
+                <p>Text: {tweetsToAnalyze[index]}</p>
+                <p>Compound: {sentiment.compound}</p>
+                <p>Negative: {sentiment.neg}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
