@@ -2,7 +2,8 @@
 
 The Twitter Sentiment Analysis Application is a web application built using React that allows users to retrieve real-time tweets based on a search topic and perform sentiment analysis on the retrieved tweets. The application leverages two APIs to provide these features.
 
-![Screenshot (9)](https://github.com/luckychitundu/sentiment/assets/87910852/65336a74-e8a2-4814-99fd-373356add646)
+![Screenshot (10)](https://github.com/luckychitundu/sentiment/assets/87910852/f0d2b3e2-19dc-4876-a572-75eaac1c656b)
+
 
 
 ## Features
