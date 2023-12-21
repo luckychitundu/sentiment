@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import TweetSentimentAnalysis from './TweetSentimentAnalysis';
 import BackgroundChanger from './BackgroundChanger';
@@ -17,34 +17,30 @@ const App = () => {
 
   // Function to fetch tweets using Axios
   const fetchTweets = async () => {
-    
-      const options = {
-        method: 'GET',
-        url: 'https://twitter-data1.p.rapidapi.com/v1.1/SearchTweets/',
-        params: {
-          q: searchQuery,
-          count: '5'
-        },
-        headers: {
-          'X-RapidAPI-Key': apiKey,
-          'X-RapidAPI-Host': 'twitter-data1.p.rapidapi.com'
+    const options = {
+
+          method: 'GET',
+          url: 'https://twitter-api47.p.rapidapi.com/v1/search',
+          params: {
+            q: searchQuery,
+            type: 'Latest'
+          },
+          headers: {
+            'X-RapidAPI-Key': apiKey,
+            'X-RapidAPI-Host': 'twitter-api47.p.rapidapi.com'
+          }
+        };
+        
+        try {
+          const response = await axios.request(options);
+          console.log(response.data);
+          // console.log(twitterData);
+
+        } catch (error) {
+          console.error( 'Error fetching tweets:',error);
         }
-      };
-  
-      try {
-        const response = await axios.request(options);
-        const twitterData = response.data.statuses;
-        console.log(twitterData);
+    
 
-        const tweetTexts = twitterData.map(tweet => tweet.full_text)
-        setTweets(twitterData);
-        setTweettext(tweetTexts);
-
-        console.log(tweetTexts);
-
-      } catch (error) {
-        console.error('Error fetching tweets:', error);
-      }
     };
 
   const handleSearch = () => {
