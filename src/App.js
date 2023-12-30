@@ -33,8 +33,19 @@ const App = () => {
         
         try {
           const response = await axios.request(options);
-          console.log(response.data);
-          // console.log(twitterData);
+          
+          const resultEntries = response.data.entries;
+
+          const tweetTexts = resultEntries.map(tweet => {
+            const legacyText = tweet.content.itemContent.tweet_results.result.legacy;
+            return legacyText || ''; 
+          });
+          
+
+          console.log(tweetTexts);
+          setTweets(tweetTexts);
+          setTweettext(tweetTexts);
+          
 
         } catch (error) {
           console.error( 'Error fetching tweets:',error);
@@ -76,12 +87,15 @@ const App = () => {
 
   const handleAnalysis = async () => {
     const analyzedSentiments = await Promise.all(
-      tweettext.map(async (text) => {
-        console.log(text)
-        const sentimentResult = await analyzeSentiment(text);
+      tweets.map(async (text) => {
+        
+        const myText = text.full_text;
+        const sentimentResult = await analyzeSentiment(myText);
         return sentimentResult;
       })
     );
+
+    console.log(analyzedSentiments);
 
     setSentiments(analyzedSentiments);
   };

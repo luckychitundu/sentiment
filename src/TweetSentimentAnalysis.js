@@ -32,6 +32,7 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
         : [];
     }
     setFilteredTweets(filteredTweets);
+    
   };
 
   const handleSearchButtonClick = () => {
@@ -45,6 +46,8 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
     setShowResults(false);
 
   };
+
+  
 
   return (
     <div className="top-content">
@@ -186,7 +189,7 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
                   sentiments.length > 0 ? (
                     sentiments.map((sentiment, index) => (
                       <li key={index}>
-                        <p>Text: {tweettext[index]}</p>
+                        <p>Text: {sentiment.sentence}</p>
                         <p>Positive: {sentiment.pos}</p>
                         <p>Neutral: {sentiment.neu}</p>
                         <p>Negative: {sentiment.neg}</p>
@@ -200,8 +203,6 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
               </ul>
             </div>
 
-
-          {/* ... remaining UI elements ... */}
         </div>
         
       </div>
