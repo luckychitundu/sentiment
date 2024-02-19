@@ -47,8 +47,6 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 
   };
 
-  
-
   return (
     <div className="top-content">
       <div className="inner-bg">
@@ -56,7 +54,7 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
           <div className="row">
             {/* ... existing component UI ... */}
             <div className="col-sm-10 col-sm-offset-1 text">
-              <h1><strong>Tweets</strong> Analysis</h1>
+              <h1><a href=""><strong>Tweets</strong> Analysis</a></h1>
               <div className="description">
                 <p>
                   Search for your favorite topic on Twitter using <strong>Sentiment</strong> filters!
