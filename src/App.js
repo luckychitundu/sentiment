@@ -17,42 +17,45 @@ const App = () => {
 
   // Function to fetch tweets using Axios
   const fetchTweets = async () => {
+    const fetch = require('node-fetch');
+  
+    const url = 'https://twitter241.p.rapidapi.com/search-v2?type=Latest&count=5&query=obama';
     const options = {
-
-          method: 'GET',
-          url: 'https://twitter-api47.p.rapidapi.com/v1/search',
-          params: {
-            q: searchQuery,
-            type: 'Latest'
-          },
-          headers: {
-            'X-RapidAPI-Key': apiKey,
-            'X-RapidAPI-Host': 'twitter-api47.p.rapidapi.com'
-          }
-        };
-        
-        try {
-          const response = await axios.request(options);
-          
-          const resultEntries = response.data.entries;
-
-          const tweetTexts = resultEntries.map(tweet => {
-            const legacyText = tweet.content.itemContent.tweet_results.result.legacy;
-            return legacyText || ''; 
-          });
-          
-
-          console.log(tweetTexts);
-          setTweets(tweetTexts);
-          setTweettext(tweetTexts);
-          
-
-        } catch (error) {
-          console.error( 'Error fetching tweets:',error);
-        }
-    
-
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key': '7ddeb23e3emsha62f3169834ef8dp1d4816jsn5de3b2d1673c',
+        'x-rapidapi-host': 'twitter241.p.rapidapi.com'
+      }
     };
+  
+    try {
+      const response = await fetch(url, options);
+      const results = await response.json();
+  
+      // Check if the timeline and entries exist before proceeding
+      const instructions = results?.result?.timeline?.instructions;
+      if (!instructions || !instructions.length) {
+        throw new Error('Unexpected response structure: no instructions found.');
+      }
+  
+      const resultEntries = instructions[0]?.entries || [];
+      
+      const tweetTexts = resultEntries.map(tweet => {
+        const legacyText = tweet?.content?.itemContent?.tweet_results?.result?.legacy?.full_text;
+        return legacyText || ''; // Return empty string if legacyText doesn't exist
+      });
+  
+      console.log(tweetTexts);
+  
+      // Assuming setTweets and setTweettext are defined functions
+      setTweets(tweetTexts);
+      setTweettext(tweetTexts);
+  
+    } catch (error) {
+      console.error('Error fetching tweets:', error);
+    }
+  };
+  
 
   const handleSearch = () => {
     // Fetch tweets using Axios

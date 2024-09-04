@@ -5,12 +5,6 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
   const [filteredTweets, setFilteredTweets] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
-  // Function to handle the search action
-  // const performSearch = () => {
-  //   handleSearch(); // Call the handleSearch function from the parent component (App)
-  //   tweets([]); // Clear the filteredTweets state when performing a new search
-  // };
-
   // Function to handle tweet filtering
   const handleFilter = (filterType) => {
     let filteredTweets = [];
