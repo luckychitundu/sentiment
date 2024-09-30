@@ -5,40 +5,31 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
   const [filteredTweets, setFilteredTweets] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
-  // Function to handle tweet filtering
+  // Function to handle tweet filtering based on prediction value
   const handleFilter = (filterType) => {
     let filteredTweets = [];
     if (filterType === 'positive') {
-      filteredTweets = searchQuery
-        ? tweets.filter((tweet) => tweet.score > 0)
-        : [];
+      filteredTweets = sentiments.filter((sentiment) => sentiment?.prediction === 'positive');
     } else if (filterType === 'negative') {
-      filteredTweets = searchQuery
-        ? tweets.filter((tweet) => tweet.score < 0)
-        : [];
+      filteredTweets = sentiments.filter((sentiment) => sentiment?.prediction === 'negative');
     } else if (filterType === 'opinion') {
-      filteredTweets = searchQuery
-        ? tweets.filter((tweet) => tweet.comparative >= 0.5)
-        : [];
+      // Placeholder functionality for opinion filtering
+      filteredTweets = sentiments.filter(() => true); // Just include all tweets for now
     } else if (filterType === 'factual') {
-      filteredTweets = searchQuery
-        ? tweets.filter((tweet) => tweet.comparative < 0.5)
-        : [];
+      // Placeholder functionality for factual filtering
+      filteredTweets = sentiments.filter(() => true); // Just include all tweets for now
     }
     setFilteredTweets(filteredTweets);
-    
   };
 
   const handleSearchButtonClick = () => {
     handleSearch();
     setShowResults(true);
-    
   };
 
   const handleAnalyzeButtonClick = () => {
     handleAnalysis();
     setShowResults(false);
-
   };
 
   return (
@@ -46,7 +37,6 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
       <div className="inner-bg">
         <div className="container">
           <div className="row">
-            {/* ... existing component UI ... */}
             <div className="col-sm-10 col-sm-offset-1 text">
               <h1><a href=""><strong>Tweets</strong> Analysis</a></h1>
               <div className="description">
@@ -75,7 +65,6 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
                     <label className="sr-only" htmlFor="form-username">Username</label>
                     <input
                       type="text"
-
                       name="tweet_search"
                       placeholder="Enter a search topic"
                       className="form-username form-control"
@@ -140,18 +129,18 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
                             className="btn"
                             onClick={() => handleFilter('opinion')}
                           >
-                            Opinion Tweet
+                            Opinion Tweets
                           </button>
                         </div>
                         <div className="col-sm">
                           <button
                             data-toggle="tooltip"
                             data-placement="left"
-                            title="Tweets which are factual"
+                            title="Tweets which are Factual"
                             className="btn"
                             onClick={() => handleFilter('factual')}
                           >
-                            Factual Tweet
+                            Factual Tweets
                           </button>
                         </div>
                       </div>
@@ -162,49 +151,47 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
             </div>
           </div>
 
-
-        
-            <div id="search_result">
-              <ul id="search_list">
-                {showResults === true ? (
-                  tweets.length > 0 ? (
-                    tweets.map((tweet, index) => (
-                      <li key={index}>
-                        <p>{tweet.full_text}</p>
-                        <p>{tweet.created_at}</p>
-                      </li>
-                    ))
-                  ) : (
-                    <li>No results to display</li>
-                  )
+          <div id="search_result">
+            <ul id="search_list">
+              {showResults ? (
+                tweets.filter(tweet => tweet.trim() !== '').length > 0 ? ( // Filter out empty tweets
+                  tweets.filter(tweet => tweet.trim() !== '').map((tweet, index) => ( // Map only non-empty tweets
+                    <li key={index}>
+                      <p>{tweet}</p>
+                    </li>
+                  ))
                 ) : (
-                  sentiments.length > 0 ? (
-                    sentiments.map((sentiment, index) => (
+                  <li>No results to display</li>
+                )
+              ) : (
+                sentiments.length > 0 ? (
+                  sentiments.map((sentiment, index) => (
+                    sentiment ? ( // Add a guard to ensure sentiment is defined
                       <li key={index}>
-                        <p>Text: {sentiment.sentence}</p>
-                        <p>Positive: {sentiment.pos}</p>
-                        <p>Neutral: {sentiment.neu}</p>
-                        <p>Negative: {sentiment.neg}</p>
-                        <p>Compound: {sentiment.compound}</p>
+                        <p>Text: {tweettext[index]}</p>
+                        <p>Probability: {(sentiment.probability * 100).toFixed(2)}%</p>
+                        <p>Prediction: {sentiment.prediction}</p>
                       </li>
-                    ))
-                  ) : (
-                    <li>No results to display</li>
-                  )
-                )}
-              </ul>
-            </div>
+                    ) : null
+                  ))
+                ) : (
+                  <li>No sentiment results to display</li>
+                )
+              )}
+            </ul>
+          </div>
 
         </div>
-        
+
       </div>
 
-      <div style={{fontSize:45, paddingBottom:20, marginTop:-90}}>
-        <a href='https://github.com/luckychitundu/sentiment' target='_blank' rel="noreferrer" ><FaGithub /></a>
+      <div style={{ fontSize: 45, paddingBottom: 20, marginTop: -90 }}>
+        <a href='https://github.com/luckychitundu/sentiment' target='_blank' rel="noreferrer">
+          <FaGithub />
+        </a>
       </div>
     </div>
   );
 };
 
 export default TweetSentimentAnalysis;
-
