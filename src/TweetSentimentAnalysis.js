@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
 
 const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, tweets, handleAnalysis, sentiments, tweettext }) => {
   const [filteredTweets, setFilteredTweets] = useState([]);
@@ -185,9 +185,15 @@ const TweetSentimentAnalysis = ({ searchQuery, handleInputChange, handleSearch, 
 
       </div>
 
-      <div style={{ fontSize: 45, paddingBottom: 20, marginTop: -90 }}>
-        <a href='https://github.com/luckychitundu/sentiment' target='_blank' rel="noreferrer">
+      <div style={{ fontSize: 35, paddingBottom: 20, marginTop: -90 }}>
+        <a href='https://www.linkedin.com/in/lucky-chitundu/' target='_blank' rel="noreferrer" style={{marginRight: 20}}>
+          <FaLinkedin />
+        </a>
+        <a href='https://github.com/luckychitundu/sentiment' target='_blank' rel="noreferrer" style={{marginRight: 20}}>
           <FaGithub />
+        </a>
+        <a href='https://www.instagram.com/lcchitundu/?igsh=eWx0aDgwN2prMXB2&utm_source=qr' target='_blank' rel="noreferrer">
+          <FaInstagram />
         </a>
       </div>
     </div>
